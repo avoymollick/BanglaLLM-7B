@@ -1,0 +1,37 @@
+{
+  "bos_token": {
+    "content": "<s>",
+    "single_word": false,
+    "lstrip": false,
+    "rstrip": false,
+    "normalized": false
+  },
+  "eos_token": {
+    "content": "</s>",
+    "single_word": false,
+    "lstrip": false,
+    "rstrip": false,
+    "normalized": false
+  },
+  "unk_token": {
+    "content": "<unk>",
+    "single_word": false,
+    "lstrip": false,
+    "rstrip": false,
+    "normalized": false
+  },
+  "pad_token": {
+    "content": "<pad>",
+    "single_word": false,
+    "lstrip": false,
+    "rstrip": false,
+    "normalized": false
+  },
+  "mask_token": {
+    "content": "<mask>",
+    "single_word": false,
+    "lstrip": false,
+    "rstrip": false,
+    "normalized": false
+  }
+}
