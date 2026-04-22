@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 from tokenizers import Tokenizer
 
 class BengaliDataset(Dataset):
-    def __init__(self, data_path, tokenizer_path, max_len=4096, max_samples=600000):
+    def __init__(self, data_path, tokenizer_path, max_len=4096, max_samples=50000):
         cache = data_path.replace('.txt', f'_cached_{max_len}.pt')
         tok_file = tokenizer_path if tokenizer_path.endswith('.json') else os.path.join(tokenizer_path,'tokenizer.json')
         tok = Tokenizer.from_file(tok_file)

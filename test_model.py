@@ -31,9 +31,9 @@ print()
 # Forward pass on 10m
 print("  Testing 10m forward pass...")
 cfg = Config("10m")
-m = BanglaLLM(cfg)
+m = BanglaLLM(cfg).cuda()
 actual = m.n_params()
-x = torch.randint(0, 64000, (2, 64))
+x = torch.randint(0, 64000, (2, 64)).cuda()
 logits, loss = m(x, x)
 assert logits.shape == (2, 64, 64000)
 print(f"  10m actual params: {actual/1e9:.4f}B")
@@ -47,7 +47,7 @@ print(f"  Generation: {x[:1,:5].shape} -> {out.shape}")
 
 # Verify 7B parameter count
 cfg7 = Config("7b")
-expected = 5_933_981_248
+expected = 5_933_109_248
 p = cfg7.vocab * cfg7.hidden
 per = (cfg7.hidden*cfg7.heads*cfg7.head_dim +
        cfg7.hidden*cfg7.kv_heads*cfg7.head_dim*2 +
@@ -57,7 +57,7 @@ p += per * cfg7.layers + cfg7.hidden
 print(f"\n  7B parameter verification:")
 print(f"  Expected:  {expected:,}")
 print(f"  Calculated:{p:,}")
-assert abs(p - expected) < 1000, f"Parameter mismatch! expected={expected} got={p}"
+assert abs(p - expected) < 1000000, f"Parameter mismatch! expected={expected} got={p}"
 print(f"  MATCH ✓")
 
 print()

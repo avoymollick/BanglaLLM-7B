@@ -120,7 +120,7 @@ class GQA(nn.Module):
             a = torch.matmul(q, k.transpose(-2,-1)) / math.sqrt(self.d)
             if mask is not None:
                 a = a.masked_fill(mask == 0, float("-inf"))
-            a = F.softmax(a.float(), dim=-1).to(q.dtype)
+            a = F.softmax(a.float(), dim=-1).to(torch.bfloat16)
             out = torch.matmul(a, v).transpose(1,2).contiguous().reshape(B, T, -1)
         return self.o_proj(out)
 
@@ -212,7 +212,7 @@ class BanglaLLM(nn.Module):
             probs = F.softmax(logits - logits.max(-1, keepdim=True).values, dim=-1)
             probs = torch.clamp(probs, 1e-10) / probs.sum(-1, keepdim=True)
             nxt = torch.multinomial(probs, 1)
-            if nxt.item() == eos: break
+            if nxt.item() == eos and len(out[0]) > ids.shape[1] + 10: break
             out = torch.cat([out, nxt], dim=1)
         return out
 
